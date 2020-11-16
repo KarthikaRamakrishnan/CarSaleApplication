@@ -1,11 +1,11 @@
 package com.cg.cars.service;
+
 import java.util.List;
 import com.cg.cars.dao.*;
 
-//import com.cg.cars.exception.InvalidAppointmentException;
 import com.cg.cars.exception.InvalidCarIdException;
-//import com.cg.cars.exception.RegYearException;
-import com.cg.cars.beans.Car;
+
+import com.cg.cars.bean.Car;
 
 public class ICarServiceImpl implements ICarService{
 	
@@ -16,49 +16,36 @@ public class ICarServiceImpl implements ICarService{
 	}
 	@Override
 	public Car addCar(Car car) {
-		carRepository.beginTransaction();
 		car= carRepository.addCar(car);
-		carRepository.commitTransaction();
-		System.out.println("Car details added successfully");
 		return car;
 		   
 	    }
 
 	@Override
-	public Car removeCar(long id){
+	public Car removeCar(long id) {
 		Car car=null;
 		try {
-			carRepository.beginTransaction();
          car= carRepository.removeCar(id);
 		}catch(InvalidCarIdException e) {
 			e.printStackTrace();
 			e.getMessage();
 		}
-        carRepository.commitTransaction();
- 	    System.out.println("Car details removed successfully");
-
      return car;
 	}
 
 	@Override
 	public Car updateCar(long id, Car car) {
-		carRepository.beginTransaction();
 	    carRepository.updateCar(id, car);
-	    carRepository.commitTransaction();
-	    System.out.println("Car details updated successfully");
 		return car;
 	      
 	}
 
 	@Override
-	public Car getCar(long id) {
-		carRepository.beginTransaction();   
+	public Car getCar(long id) { 
 		Car car=carRepository.getCar(id);
-		carRepository.commitTransaction();
 		return car;
 	}
 
-	//@SuppressWarnings("unchecked")
 	@Override
 	public List<Car> getAllCars() {
 	      return carRepository.getAllCars();
@@ -77,7 +64,6 @@ public class ICarServiceImpl implements ICarService{
 
 	@Override
 	public List<Car> getCarsByBrand() {
-		
 		return carRepository.getCarsByBrand();
 	}
 
