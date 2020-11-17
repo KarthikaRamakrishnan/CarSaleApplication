@@ -2,6 +2,8 @@ package com.cg.cars.beans;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -10,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 @Entity
@@ -33,6 +36,13 @@ public class Customer implements Serializable {
     
 	@Column(name="Address")
 	private Address address;
+
+	@OneToMany(mappedBy = "customer",cascade=CascadeType.ALL)
+	private List<Order> orders = new ArrayList<Order>();
+	
+	@OneToMany(mappedBy = "customer",cascade=CascadeType.ALL)
+	private List<Appointment> appointments = new ArrayList<Appointment>();
+	
 public Customer() {
 		
 	}
@@ -44,6 +54,27 @@ public Customer() {
 		this.contactNo=contactNo;
 		this.dob=dob;
 		this.address=address;
+	}
+	public Customer(String userId, String name, String email, String contactNo, LocalDate dob) {
+		super();
+		this.userId = userId;
+		this.name = name;
+		this.email = email;
+		this.contactNo = contactNo;
+		this.dob = dob;
+	}
+
+	public Customer(String userId, String name, String email, String contactNo, LocalDate dob, Address address,
+			List<Order> orders, List<Appointment> appointments) {
+		super();
+		this.userId = userId;
+		this.name = name;
+		this.email = email;
+		this.contactNo = contactNo;
+		this.dob = dob;
+		this.address = address;
+		this.orders = orders;
+		this.appointments = appointments;
 	}
 
 	public String getUserId() {
@@ -82,6 +113,18 @@ public Customer() {
 	
 	public void setAddress(Address address) {
 		this.address = address;
+	}
+	public List<Order> getOrders() {
+		return orders;
+	}
+	public void setOrders(List<Order> orders) {
+		this.orders = orders;
+	}
+	public List<Appointment> getAppointments() {
+		return appointments;
+	}
+	public void setAppointments(List<Appointment> appointments) {
+		this.appointments = appointments;
 	}
 	@Override
 	public String toString() {
@@ -141,7 +184,14 @@ public Customer() {
 			return false;
 		return true;
 	}
-
+	public void addOrder(Order order) {
+		order.setCustomer(this);
+		this.getOrders().add(order);
+	}
+	public void addAppointment(Appointment appointment) {
+		appointment.setCustomer(this);
+		this.getAppointments().add(appointment);
+	}
+	
 
 }
-
