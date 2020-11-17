@@ -47,8 +47,7 @@ public class ICarRepositoryImpl implements ICarRepository{
 	public Car getCar(long id) {
 	       //Car car =entityManager.find(Car.class, id);
 		Car car=null;
-		Query query=entityManager.createQuery("Select c from Appointment c where c.CarId=ID",Car.class);
-		//query.setParameter("app", id);
+		Query query=entityManager.createQuery("Select c from Appointment c where c.CarId=id",Car.class);
 		car=(Car) query.getSingleResult();
 	       return car;
 	}
@@ -56,14 +55,6 @@ public class ICarRepositoryImpl implements ICarRepository{
 	@Override
 	public List<Car> getAllCars() {
 		   List<Car> carsList= entityManager.createQuery("Select c from Car c",Car.class).getResultList();
-		    for(Car car:carsList) {
-		    	System.out.println("Car Id: "+car.getCarId());
-		    	System.out.println("Car brand: "+car.getBrand());
-		    	System.out.println("Car model: "+car.getModel());
-		    	System.out.println("Car variant: "+car.getVariant());
-		    	System.out.println("Car registration year: "+car.getRegistrationYear());
-		    	System.out.println("Car registration state: "+car.getRegistrationState());
-		    }
 	   return carsList;
 	}
 
@@ -88,12 +79,12 @@ public class ICarRepositoryImpl implements ICarRepository{
 		return car;
 	}
 	@Override
-	public void commitTransaction() {
+	public void beginTransaction() {
 		entityManager.getTransaction().begin();
 		
 	}
 	@Override
-	public void beginTransaction() {
+	public void commitTransaction() {
 		entityManager.getTransaction().commit();
 		
 	}
