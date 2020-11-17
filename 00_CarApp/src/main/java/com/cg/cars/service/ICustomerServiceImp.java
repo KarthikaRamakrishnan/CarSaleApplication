@@ -42,8 +42,9 @@ public class ICustomerServiceImp implements ICustomerService{
 	}
 
 	@Override
-	public Customer updateCustomer(long custId, Customer customer) {
+	public  Customer updateCustomer(long custId, Customer customer) {
 		Customer cus=null;
+		rep.beginTransaction();
 		try
 		{
 			cus= rep.updateCustomer(custId, customer);
@@ -52,11 +53,13 @@ public class ICustomerServiceImp implements ICustomerService{
 		{
 			e.printStackTrace();
 		}
+		rep.commitTransaction();
 		return cus;
 	}
 
 	@Override
 	public Customer getCustomer(long custId) {
+		rep.beginTransaction();
 		Customer cus=null;
 		try
 		{
@@ -66,18 +69,24 @@ public class ICustomerServiceImp implements ICustomerService{
 		{
 			e.printStackTrace();
 		}
+		rep.commitTransaction();
 		return cus;
 	}
 
 	@Override
 	public List<Customer> getAllCustomers() {
-		return rep.getAllCustomers();
+		rep.beginTransaction();
+		List<Customer> all=rep.getAllCustomers();
+		rep.commitTransaction();
+		return all;
 		
 	}
 
 	@Override
 	public List<Customer> getCustomersByLocation() {
+		
 		List<Customer> cus=null;
+		rep.beginTransaction();
 		try
 		{
 		 cus=rep.getCustomersByLocation();
@@ -86,6 +95,7 @@ public class ICustomerServiceImp implements ICustomerService{
 		{
 			e.printStackTrace();
 		}
+		rep.commitTransaction();
 		return cus;
 	}
 
