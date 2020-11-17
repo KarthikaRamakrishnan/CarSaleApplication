@@ -17,9 +17,9 @@ public interface ICarRepository {
 	public List<Car> getCarsByModel();
 	public List<Car> getCarsByBrand();
 	
-	public abstract void commitTransaction();
+	public void commitTransaction();
 
-	public abstract void beginTransaction();
+	public void beginTransaction();
 	
 
 }
