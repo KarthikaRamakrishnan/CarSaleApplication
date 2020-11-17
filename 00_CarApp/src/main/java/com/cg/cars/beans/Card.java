@@ -99,5 +99,55 @@ public class Card {
 			payment.setCard(this);              //this will avoid nested cascade
 			this.getPayments().add(payment);
 		}
+	
+	@Override
+		public int hashCode() {
+			final int prime = 31;
+			int result = 1;
+			result = prime * result + ((cardExpiry == null) ? 0 : cardExpiry.hashCode());
+			result = prime * result + (int) (cardId ^ (cardId >>> 32));
+			result = prime * result + ((cardName == null) ? 0 : cardName.hashCode());
+			result = prime * result + ((cardNumber == null) ? 0 : cardNumber.hashCode());
+			result = prime * result + cvv;
+			result = prime * result + ((payments == null) ? 0 : payments.hashCode());
+			return result;
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj)
+				return true;
+			if (obj == null)
+				return false;
+			if (getClass() != obj.getClass())
+				return false;
+			Card other = (Card) obj;
+			if (cardExpiry == null) {
+				if (other.cardExpiry != null)
+					return false;
+			} else if (!cardExpiry.equals(other.cardExpiry))
+				return false;
+			if (cardId != other.cardId)
+				return false;
+			if (cardName == null) {
+				if (other.cardName != null)
+					return false;
+			} else if (!cardName.equals(other.cardName))
+				return false;
+			if (cardNumber == null) {
+				if (other.cardNumber != null)
+					return false;
+			} else if (!cardNumber.equals(other.cardNumber))
+				return false;
+			if (cvv != other.cvv)
+				return false;
+			if (payments == null) {
+				if (other.payments != null)
+					return false;
+			} else if (!payments.equals(other.payments))
+				return false;
+			return true;
+		}
+
 
 }
