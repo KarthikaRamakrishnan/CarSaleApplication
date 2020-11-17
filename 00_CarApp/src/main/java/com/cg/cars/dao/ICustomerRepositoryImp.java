@@ -1,12 +1,14 @@
 package com.cg.cars.dao;
 
 
+import java.time.LocalDate;
 import java.util.List;
 
 //import javax.management.Query;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
+import com.cg.cars.beans.Address;
 import com.cg.cars.beans.Customer;
 import com.cg.cars.exception.CustomerLocationInvalid;
 import com.cg.cars.exception.CustomerNotFoundException;
@@ -21,7 +23,7 @@ public class ICustomerRepositoryImp implements ICustomerRepository {
 
 	@Override
 	public Customer addCustomer(Customer customer) {
-		entityManager.persist(customer);
+		entityManager.persist(entityManager.merge(customer));
 		return customer;
 	}
 
@@ -46,6 +48,14 @@ public class ICustomerRepositoryImp implements ICustomerRepository {
 		{
 			throw new InvalidCustomerException("Invalid Customer ID");
 		}
+		cus1.setUserId(customer.getName());
+		cus1.setName(customer.getName());
+		cus1.setContactNo(customer.getContactNo());
+		cus1.setEmail(customer.getEmail());
+		cus1.setDob(LocalDate.of(1997, 04, 23));
+		Address obj = new Address("111", "muthusamy street", "shevapet", "salem", "TamilNadu", 636002);
+		cus1.setAddress(obj);
+		cus1.setAddress(customer.getAddress());
 		customer=entityManager.merge(cus1);
 		return customer;
 	}
