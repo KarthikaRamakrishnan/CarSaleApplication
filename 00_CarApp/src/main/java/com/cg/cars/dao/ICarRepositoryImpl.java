@@ -8,7 +8,7 @@ import javax.persistence.TypedQuery;
 
 import com.cg.cars.beans.Car;
 import com.cg.cars.exception.InvalidCarIdException;
-//import com.cg.cars.exception.InvalidCarIdException;
+
 //import com.cg.cars.exception.RegYearException;
 
 
@@ -31,8 +31,8 @@ public class ICarRepositoryImpl implements ICarRepository{
 		Car car= entityManager.find(Car.class, id);
 		if(car==null) {
 			throw new InvalidCarIdException("Invalid CarId");
-		}
-	        entityManager.remove(car);
+		}else 
+			entityManager.remove(car);
 	        return car;
 	    }
 
@@ -47,7 +47,7 @@ public class ICarRepositoryImpl implements ICarRepository{
 	public Car getCar(long id) {
 	       //Car car =entityManager.find(Car.class, id);
 		Car car=null;
-		Query query=entityManager.createQuery("Select c from Appointment c where c.CarId=id",Car.class);
+		Query query=entityManager.createQuery("Select c from Car c where c.CarId=id",Car.class);
 		car=(Car) query.getSingleResult();
 	       return car;
 	}
