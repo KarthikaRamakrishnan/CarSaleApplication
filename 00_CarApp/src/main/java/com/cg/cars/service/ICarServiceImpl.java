@@ -56,30 +56,22 @@ public class ICarServiceImpl implements ICarService{
 
 	@Override
 	public List<Car> getAllCars() {
-		carRepository.beginTransaction();
 	        return carRepository.getAllCars();
-		carRepository.commitTransaction();
 	}
 
 	@Override
 	public List<Car> getCarsByLocation() {
-		carRepository.beginTransaction();
 		return carRepository.getCarsByLocation();
-		carRepository.commitTransaction();
 	}
 
 	@Override
 	public List<Car> getCarsByModel() {
-		carRepository.beginTransaction();
 		return carRepository.getCarsByLocation();
-		carRepository.commitTransaction();
 	}
 
 	@Override
 	public List<Car> getCarsByBrand() {
-		carRepository.beginTransaction();
 		return carRepository.getCarsByBrand();
-		carRepository.commitTransaction();
 	}
 
 }
