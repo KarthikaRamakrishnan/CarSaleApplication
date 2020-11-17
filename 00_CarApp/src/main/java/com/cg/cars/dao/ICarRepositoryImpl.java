@@ -20,11 +20,17 @@ public class ICarRepositoryImpl implements ICarRepository{
 	public ICarRepositoryImpl() {
 		entityManager=JPAUtil.getEntityManager();
 	}
+	/*
+	 * This method adds the datails of the Car to database
+	 */
 	@Override
 	public Car addCar(Car car) {
 	       entityManager.persist(car);
 	     return car;
 	}
+	/*
+	 * This method removes the details of the car based on specified id
+	 */
 
 	@Override
 	public Car removeCar(long id) throws InvalidCarIdException{
@@ -35,6 +41,9 @@ public class ICarRepositoryImpl implements ICarRepository{
 			entityManager.remove(car);
 	        return car;
 	    }
+	/*
+	 * This method updates the car details of specified id
+	 */
 
 	@Override
 	public Car updateCar(long id, Car car) {
@@ -42,6 +51,9 @@ public class ICarRepositoryImpl implements ICarRepository{
 	        entityManager.merge(car);
 	        return car;
 	}
+	/*
+	 * This method returns the details of particular car based on id
+	 */
 
 	@Override
 	public Car getCar(long id) {
@@ -51,6 +63,9 @@ public class ICarRepositoryImpl implements ICarRepository{
 		car=(Car) query.getSingleResult();
 	       return car;
 	}
+	/*
+	 * This method returns the list of all car details
+	 */
 
 	@Override
 	public List<Car> getAllCars() {
