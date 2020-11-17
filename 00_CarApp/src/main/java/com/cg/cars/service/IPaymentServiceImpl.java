@@ -37,10 +37,13 @@ public class IPaymentServiceImpl implements IPaymentService {
 	public Payment removePayment(long id) {
 
 		paymentRepository.beginTransaction();
-		Payment payment = paymentRepository.removePayment(id);
+		Payment payment = null;
+		try {
+		payment = paymentRepository.removePayment(id);
+		}catch(PaymentIdNotFoundException e) {
+			e.getMessage();
+		}
 		paymentRepository.commitTransaction();
-
-		System.out.println("Payment removed successfully");
 		return payment;
 	}
 
@@ -53,10 +56,12 @@ public class IPaymentServiceImpl implements IPaymentService {
 	public Payment updatePayment(long id, Payment payment) {
 
 		paymentRepository.beginTransaction();
+		try {
 		paymentRepository.updatePayment(id, payment);
+		}catch(InvalidPaymentException e) {
+			e.printStackTrace();
+		}
 		paymentRepository.commitTransaction();
-
-		System.out.println("Payment updated successfully");
 		return payment;
 	}
 
@@ -68,7 +73,12 @@ public class IPaymentServiceImpl implements IPaymentService {
 	@Override
 	public Payment getPaymentDetails(long id) {
 		paymentRepository.beginTransaction();
-		Payment payment = paymentRepository.getPaymentDetails(id);
+		Payment payment = null;
+		try {
+		payment = paymentRepository.getPaymentDetails(id);
+		}catch(PaymentIdNotFoundException e) {
+			e.printStackTrace();
+		}
 		paymentRepository.commitTransaction();
 		return payment;
 	}
@@ -78,6 +88,9 @@ public class IPaymentServiceImpl implements IPaymentService {
 	 */
 	@Override
 	public List<Payment> getAllPaymentDetails() {
-		return paymentRepository.getAllPaymentDetails();
+		paymentRepository.beginTransaction();
+		List<Payment> paymentList = paymentRepository.getAllPaymentDetails();
+		paymentRepository.commitTransaction();
+		return paymentList;
 	}
 }
